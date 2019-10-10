@@ -1,0 +1,81 @@
+﻿<Window x:Class="PrimeNumberGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PrimeNumberGUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Column="0" Grid.Row="0" Stroke="Gray" Fill="Transparent"/>
+        <Rectangle Grid.Column="0" Grid.Row="1" Stroke="Gray" Fill="Transparent"/>
+        <Rectangle Grid.Column="0" Grid.Row="2" Stroke="Gray" Fill="Transparent"/>
+        <Rectangle Grid.Column="1" Grid.Row="0" Stroke="Gray" Fill="Transparent"/>
+        <Rectangle Grid.Column="1" Grid.Row="1" Stroke="Gray" Fill="Transparent"/>
+        <Rectangle Grid.Column="1" Grid.Row="2" Stroke="Gray" Fill="Transparent"/>
+        <Rectangle Grid.Column="2" Grid.Row="0" Stroke="Gray" Fill="Transparent"/>
+        <Rectangle Grid.Column="2" Grid.Row="1" Stroke="Gray" Fill="Transparent"/>
+        <Rectangle Grid.Column="2" Grid.Row="2" Stroke="Gray" Fill="Transparent"/>
+
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <Label Content="Start value" Grid.Column="0" Grid.Row="0"/>
+            <TextBox x:Name="startValue" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="20" Text="" TextWrapping="NoWrap" VerticalAlignment="Top" Height="25" Width="150" ToolTip="Start value"/>
+
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <Label Content="End value" Grid.Column="0" Grid.Row="1"/>
+            <TextBox x:Name="endValue" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="20" Text="" TextWrapping="NoWrap" Height="25" Width="150" ToolTip="End value"/>
+        </StackPanel>
+        
+        <Button x:Name="calculateButton" Content="Calculate" Grid.Column="0" Grid.Row="2" Margin="50" Click="calculateButton_Click"/>
+
+        <Label Content="Progress:" Grid.Column="1" Grid.Row="0"/>
+        <Label x:Name="P1" Content="Calculating Sequantial list.." Grid.Column="2" Grid.Row="0" VerticalAlignment="Top" Visibility="Hidden"/>
+        <Label x:Name="P2" Content="Calculating Parallel list.." Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Visibility="Hidden"/>
+        <Label x:Name="P3" Content="Done!" Grid.Column="2" Grid.Row="0" VerticalAlignment="Bottom" Visibility="Hidden"/>
+
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Sequential list:" Grid.Column="0" Grid.Row="0"></Label>
+            <ListBox x:Name="sequentialListBox" Grid.Column="0" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+
+        </Grid>
+
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="2" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Parallel list:" Grid.Column="0" Grid.Row="0"></Label>
+            <ListBox x:Name="parallelListBox" Grid.Column="0" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+
+        </Grid>
+
+        <Label Content="Sequential Stats:" Grid.Column="1" Grid.Row="2"/>
+        <Label Content="Items: " Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
+        <Label x:Name="sequentialItems" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <Label Content="Calculated in (ms): " Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom"/>
+        <Label x:Name="sequentialTime" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        
+        <Label Content="Parallel Stats:" Grid.Column="2" Grid.Row="2"/>
+        <Label Content="Items: " Grid.Column="2" Grid.Row="2" VerticalAlignment="Center"/>
+        <Label x:Name="parallelItems" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <Label Content="Calculated in (ms): " Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom"/>
+        <Label x:Name="parallelTime" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+    </Grid>
+</Window>

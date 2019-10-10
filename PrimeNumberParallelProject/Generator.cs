@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace PrimeNumberParallelProject
 {
-    class Program
+    public class Generator
     {
-        static void Main(string[] args)
+        /*static void Main(string[] args)
         {
             Console.WriteLine("Please insert a starting number: ");
             string inputFirst = Console.ReadLine();
@@ -30,18 +30,24 @@ namespace PrimeNumberParallelProject
                 Console.WriteLine(e);
             }
 
-            GetPrimesParallel(first, last);
+
             GetPrimesSequential(first, last);
+            GetPrimesParallel(first, last);
 
-        }
+        }*/
 
-        static List<long> GetPrimesSequential(long first, long last)
+        public static List<long> GetPrimesSequential(long first, long last)
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
+         //   var watch = System.Diagnostics.Stopwatch.StartNew();
             List<long> primes = new List<long>();
 
             long current = first;
             int[] calculatePrimes = { 2, 3, 5, 7 };
+
+            foreach (var item in calculatePrimes)
+            {
+                primes.Add(item);
+            }
 
             for (current = first; current <= last; current++)
             {
@@ -58,22 +64,28 @@ namespace PrimeNumberParallelProject
                 }
             }
 
-            watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
-            Console.WriteLine("GetPrimesSequential Finished in: " + elapsedMs);
+           // watch.Stop();
+            //var elapsedMs = watch.ElapsedMilliseconds;
+            //Console.WriteLine("GetPrimesSequential Finished in: " + elapsedMs);
             Console.WriteLine(primes.Count);
             return primes;
 
 
         }
 
-        static List<long> GetPrimesParallel(long first, long last)
+        public static List<long> GetPrimesParallel(long first, long last)
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
+            //var watch = System.Diagnostics.Stopwatch.StartNew();
             List<long> primes = new List<long>();
 
             long current = first;
             int[] calculatePrimes = { 2, 3, 5, 7 };
+
+            foreach (var item in calculatePrimes)
+            {
+                primes.Add(item);
+            }
+
             CancellationTokenSource cts = new CancellationTokenSource();
             ParallelOptions po = new ParallelOptions()
             {
@@ -83,8 +95,8 @@ namespace PrimeNumberParallelProject
 
             Task.Factory.StartNew(() =>
             {
-                if (Console.ReadKey().KeyChar == 'c')
-                    cts.Cancel();
+                //if (Console.ReadKey().KeyChar == 'c')
+                  //  cts.Cancel();
             });
 
             try
@@ -117,9 +129,9 @@ namespace PrimeNumberParallelProject
                 cts.Dispose();
             }
 
-            watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
-            Console.WriteLine("GetPrimesParallel Finished in: " + elapsedMs);
+            //watch.Stop();
+            //var elapsedMs = watch.ElapsedMilliseconds;
+            //Console.WriteLine("GetPrimesParallel Finished in: " + elapsedMs);
             Console.WriteLine(primes.Count);
             return primes;
         }
