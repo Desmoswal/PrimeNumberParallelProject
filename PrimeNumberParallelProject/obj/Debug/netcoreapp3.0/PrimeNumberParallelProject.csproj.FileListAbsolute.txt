@@ -1,0 +1,11 @@
+D:\Projects\School\Parallel\PrimeNumberParallelProject\PrimeNumberParallelProject\obj\Debug\netcoreapp3.0\PrimeNumberParallelProject.csprojAssemblyReference.cache
+D:\Projects\School\Parallel\PrimeNumberParallelProject\PrimeNumberParallelProject\obj\Debug\netcoreapp3.0\PrimeNumberParallelProject.AssemblyInfoInputs.cache
+D:\Projects\School\Parallel\PrimeNumberParallelProject\PrimeNumberParallelProject\obj\Debug\netcoreapp3.0\PrimeNumberParallelProject.AssemblyInfo.cs
+D:\Projects\School\Parallel\PrimeNumberParallelProject\PrimeNumberParallelProject\bin\Debug\netcoreapp3.0\PrimeNumberParallelProject.exe
+D:\Projects\School\Parallel\PrimeNumberParallelProject\PrimeNumberParallelProject\bin\Debug\netcoreapp3.0\PrimeNumberParallelProject.deps.json
+D:\Projects\School\Parallel\PrimeNumberParallelProject\PrimeNumberParallelProject\bin\Debug\netcoreapp3.0\PrimeNumberParallelProject.runtimeconfig.json
+D:\Projects\School\Parallel\PrimeNumberParallelProject\PrimeNumberParallelProject\bin\Debug\netcoreapp3.0\PrimeNumberParallelProject.runtimeconfig.dev.json
+D:\Projects\School\Parallel\PrimeNumberParallelProject\PrimeNumberParallelProject\bin\Debug\netcoreapp3.0\PrimeNumberParallelProject.dll
+D:\Projects\School\Parallel\PrimeNumberParallelProject\PrimeNumberParallelProject\bin\Debug\netcoreapp3.0\PrimeNumberParallelProject.pdb
+D:\Projects\School\Parallel\PrimeNumberParallelProject\PrimeNumberParallelProject\obj\Debug\netcoreapp3.0\PrimeNumberParallelProject.dll
+D:\Projects\School\Parallel\PrimeNumberParallelProject\PrimeNumberParallelProject\obj\Debug\netcoreapp3.0\PrimeNumberParallelProject.pdb
