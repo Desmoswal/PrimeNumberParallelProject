@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PrimeNumberParallelProject
 {
@@ -8,65 +11,116 @@ namespace PrimeNumberParallelProject
     {
         static void Main(string[] args)
         {
-            GeneratePrimesSieveOfEratosthenes(100000);
+            Console.WriteLine("Please insert a starting number: ");
+            string inputFirst = Console.ReadLine();
+            Console.WriteLine("Please insert an ending number: ");
+            string inputLast = Console.ReadLine();
+
+            long first = 0;
+            long last = 0;
+
+            try
+            {
+                first = long.Parse(inputFirst);
+                last = long.Parse(inputLast);
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e);
+            }
+
+            GetPrimesParallel(first, last);
+            GetPrimesSequential(first, last);
+
         }
 
-        public static int ApproximateNthPrime(int nn)
+        static List<long> GetPrimesSequential(long first, long last)
         {
-            double n = (double)nn;
-            double p;
-            if (nn >= 7022)
-            {
-                p = n * Math.Log(n) + n * (Math.Log(Math.Log(n)) - 0.9385);
-            }
-            else if (nn >= 6)
-            {
-                p = n * Math.Log(n) + n * Math.Log(Math.Log(n));
-            }
-            else if (nn > 0)
-            {
-                p = new int[] { 2, 3, 5, 7, 11 }[nn - 1];
-            }
-            else
-            {
-                p = 0;
-            }
-            return (int)p;
-        }
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            List<long> primes = new List<long>();
 
-        // Find all primes up to and including the limit
-        public static BitArray SieveOfEratosthenes(int limit)
-        {
-            BitArray bits = new BitArray(limit + 1, true);
-            bits[0] = false;
-            bits[1] = false;
-            for (int i = 0; i * i <= limit; i++)
+            long current = first;
+            int[] calculatePrimes = { 2, 3, 5, 7 };
+
+            for (current = first; current <= last; current++)
             {
-                if (bits[i])
+                if (current <= 1)
                 {
-                    for (int j = i * i; j <= limit; j += i)
-                    {
-                        bits[j] = false;
-                    }
+                    continue;
+                }
+
+                else if (current % calculatePrimes[0] != 0 && current % calculatePrimes[1] != 0 && current % calculatePrimes[2] != 0 && current % calculatePrimes[3] != 0)
+                {
+                    primes.Add(current);
+                    //Console.WriteLine(current);
+                    continue;
                 }
             }
-            return bits;
+
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine("GetPrimesSequential Finished in: " + elapsedMs);
+            Console.WriteLine(primes.Count);
+            return primes;
+
+
         }
 
-        public static List<int> GeneratePrimesSieveOfEratosthenes(int n)
+        static List<long> GetPrimesParallel(long first, long last)
         {
-            int limit = ApproximateNthPrime(n);
-            BitArray bits = SieveOfEratosthenes(limit);
-            List<int> primes = new List<int>();
-            for (int i = 0, found = 0; i < limit && found < n; i++)
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            List<long> primes = new List<long>();
+
+            long current = first;
+            int[] calculatePrimes = { 2, 3, 5, 7 };
+            CancellationTokenSource cts = new CancellationTokenSource();
+            ParallelOptions po = new ParallelOptions()
             {
-                if (bits[i])
-                {
-                    primes.Add(i);
-                    found++;
-                    Console.WriteLine(i);
-                }
+                CancellationToken = cts.Token,
+                MaxDegreeOfParallelism = System.Environment.ProcessorCount
+            };
+
+            Task.Factory.StartNew(() =>
+            {
+                if (Console.ReadKey().KeyChar == 'c')
+                    cts.Cancel();
+            });
+
+            try
+            {
+                Parallel.For(first, last + 1, po, (current) =>
+                 {
+                     if (current <= 1)
+                     {
+                         return;
+                     }
+
+                     else if (current % calculatePrimes[0] != 0 && current % calculatePrimes[1] != 0 &&
+                              current % calculatePrimes[2] != 0 && current % calculatePrimes[3] != 0)
+                     {
+                         lock (primes)
+                         {
+                             primes.Add(current);
+                         }
+                         return;
+                     }
+
+                 });
             }
+            catch (OperationCanceledException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                cts.Dispose();
+            }
+
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine("GetPrimesParallel Finished in: " + elapsedMs);
+            Console.WriteLine(primes.Count);
             return primes;
         }
     }
