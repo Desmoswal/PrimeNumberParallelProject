@@ -30,12 +30,7 @@ namespace PrimeNumberGUI
 
         private void calculateButton_Click(object sender, RoutedEventArgs e)
         {
-            P1.Content = "Calculating Sequential list...";
-            P2.Content = "Calculating Parallel list...";
-            P3.Content = "Sorting parallel array...";
-            P1.Visibility = Visibility.Hidden;
-            P2.Visibility = Visibility.Hidden;
-            P3.Visibility = Visibility.Hidden;
+            ResetUI();
 
             long first = 0;
             long last = 0;
@@ -52,8 +47,29 @@ namespace PrimeNumberGUI
             }
 
             Calculations(first, last);
+        }
 
-            
+        private void CleanUo()
+        {
+            GC.Collect(0, GCCollectionMode.Forced);
+            GC.Collect(1, GCCollectionMode.Forced);
+            GC.Collect(2, GCCollectionMode.Forced);
+        }
+
+        private void ResetUI()
+        {
+            P1.Content = "Calculating Sequential list...";
+            P2.Content = "Calculating Parallel list...";
+            P3.Content = "Sorting parallel array...";
+            P1.Visibility = Visibility.Hidden;
+            P2.Visibility = Visibility.Hidden;
+            P3.Visibility = Visibility.Hidden;
+            sequentialListBox.ItemsSource = null;
+            parallelListBox.ItemsSource = null;
+            sequentialTime.Content = "";
+            sequentialItems.Content = "";
+            parallelTime.Content = "";
+            parallelItems.Content = "";
         }
 
         public void Calculations(long first, long last)
@@ -78,6 +94,7 @@ namespace PrimeNumberGUI
                 sequentialListBox.ItemsSource = sequentials;
                 sequentialTime.Content = seqTime + " ms";
                 sequentialItems.Content = sequentials.Count + " items";
+                CleanUo();
             });
 
             P2.Visibility = Visibility.Visible; //parallel start
@@ -96,10 +113,12 @@ namespace PrimeNumberGUI
                 {
                     P3.Content = (string) P3.Content + "done";
                     parallelListBox.ItemsSource = parallels; //only show parallel array after sorting
+                    CleanUo();
                 });
                 
                 parallelTime.Content = parTime + " ms";
                 parallelItems.Content = parallels.Count + " items";
+                
             });
         }
     }
