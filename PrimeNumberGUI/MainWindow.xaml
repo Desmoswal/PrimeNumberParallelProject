@@ -42,9 +42,9 @@
         <Button x:Name="calculateButton" Content="Calculate" Grid.Column="0" Grid.Row="2" Margin="50" Click="calculateButton_Click"/>
 
         <Label Content="Progress:" Grid.Column="1" Grid.Row="0"/>
-        <Label x:Name="P1" Content="Calculating Sequantial list.." Grid.Column="2" Grid.Row="0" VerticalAlignment="Top" Visibility="Hidden"/>
-        <Label x:Name="P2" Content="Calculating Parallel list.." Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Visibility="Hidden"/>
-        <Label x:Name="P3" Content="Done!" Grid.Column="2" Grid.Row="0" VerticalAlignment="Bottom" Visibility="Hidden"/>
+        <Label x:Name="P1" Content="Calculating Sequential list..." Grid.Column="2" Grid.Row="0" VerticalAlignment="Top" Visibility="Hidden"/>
+        <Label x:Name="P2" Content="Calculating Parallel list..." Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Visibility="Hidden"/>
+        <Label x:Name="P3" Content="Sorting parallel array..." Grid.Column="2" Grid.Row="0" VerticalAlignment="Bottom" Visibility="Hidden"/>
 
         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>

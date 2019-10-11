@@ -30,6 +30,9 @@ namespace PrimeNumberGUI
 
         private void calculateButton_Click(object sender, RoutedEventArgs e)
         {
+            P1.Content = "Calculating Sequential list...";
+            P2.Content = "Calculating Parallel list...";
+            P3.Content = "Sorting parallel array...";
             P1.Visibility = Visibility.Hidden;
             P2.Visibility = Visibility.Hidden;
             P3.Visibility = Visibility.Hidden;
@@ -57,27 +60,47 @@ namespace PrimeNumberGUI
         {
             List<long> sequentials = new List<long>();
             List<long> parallels = new List<long>();
+            long seqTime = 0;
+            long parTime = 0;
 
-            P1.Visibility = Visibility.Visible;
+            P1.Visibility = Visibility.Visible; //sequential start
 
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            sequentials = Generator.GetPrimesSequential(first, last);
-            watch.Stop();
-            sequentialListBox.ItemsSource = sequentials;
-            sequentialTime.Content = watch.ElapsedMilliseconds;
+            Task.Factory.StartNew(() =>
+            {
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                sequentials = Generator.GetPrimesSequential(first, last);
+                watch.Stop();
+                seqTime = watch.ElapsedMilliseconds;
 
-            P2.Visibility = Visibility.Visible;
+            }).GetAwaiter().OnCompleted(() =>
+            {
+                P1.Content = (string)P1.Content + "done";
+                sequentialListBox.ItemsSource = sequentials;
+                sequentialTime.Content = seqTime + " ms";
+                sequentialItems.Content = sequentials.Count + " items";
+            });
 
-            watch = System.Diagnostics.Stopwatch.StartNew();
-            parallels = Generator.GetPrimesParallel(first, last);
-            watch.Stop();
-            parallelListBox.ItemsSource = parallels;
-            parallelTime.Content = watch.ElapsedMilliseconds;
+            P2.Visibility = Visibility.Visible; //parallel start
 
-            P3.Visibility = Visibility.Visible;
-
-            sequentialItems.Content = sequentials.Count;
-            parallelItems.Content = parallels.Count;
+            Task.Factory.StartNew(() =>
+            {
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                parallels = Generator.GetPrimesParallel(first, last);
+                watch.Stop();
+                parTime = watch.ElapsedMilliseconds;
+            }).GetAwaiter().OnCompleted(() =>
+            {
+                P2.Content = (string)P2.Content + "done";
+                P3.Visibility = Visibility.Visible; //sorting start
+                Task.Factory.StartNew(() => parallels.Sort()).GetAwaiter().OnCompleted(() =>
+                {
+                    P3.Content = (string) P3.Content + "done";
+                    parallelListBox.ItemsSource = parallels; //only show parallel array after sorting
+                });
+                
+                parallelTime.Content = parTime + " ms";
+                parallelItems.Content = parallels.Count + " items";
+            });
         }
     }
 }
